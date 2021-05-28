@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript" src="https://code.highcharts.com/highcharts-more.js"></script>	
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
+</head>
+<body>
+
+<h2>World</h2>
+<p color='blue'><b>COVID-19 Vaccinations</b></p>
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'bubble')">COUNTRY wise Covid_19 Vaccinations</button>
+  <button class="tablinks" onclick="openCity(event, 'pie')">COVID-19 Vaccinations By Manfacturer</button>
+  <button class="tablinks" onclick="openCity(event, 'bar')">COVID-19 Vaccinations by Continents</button>
+  <button class="tablinks" onclick="openCity(event, 'bar1')">COVID-19 Total Vaccinations</button>
+  <button class="tablinks" onclick="openCity(event, 'semicircle')">COVID-19 Total confirmed deaths by Continent</button>
+  <button class="tablinks" onclick="openCity(event, 'Ref')">References</button>
+</div>
+
+<div id="bubble" class="tabcontent">
+   
+</div>
+<div id="pie" class="tabcontent">
+  
+  </div>
+
+<div id="bar" class="tabcontent">
+  <
+  </div>
+  <div id="bar1" class="tabcontent">
+   
+</div>
+<div id="semicircle" class="tabcontent">
+  
+</div>
+  </div>
+
+<div id="Ref" class="tabcontent">
+  <h3>References</h3><br>
+  <a href="https://ourworldindata.org/covid-vaccinations"> Covid_19 vaccinations data</a><br>
+   <a href="https://github.com/owid/covid-19-data/tree/master/public/data/vaccinations"> Github Repo of Covid_19 vaccinations data</a><br>
+   <a href="https://www.highcharts.com/demo"> Highcharts </a><br>
+  
+  </div>
+
+
+<script>
+
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+Highcharts.chart('bubble', {
+
+  chart: {
+    type: 'bubble',
+    plotBorderWidth: 1,
+    zoomType: 'xy'
+  },
+
+  legend: {
+    enabled: false
+  },
+
+  title: {
+    text: 'Covid_19 Vaccination Outlook Per Country'
+  },
+
+  subtitle: {
+    text: 'Source: <a href="https://github.com/owid/covid-19-data/tree/master/public/data">Johns Hopkins University (JHU)</a>'
+  },
+
+  accessibility: {
+    point: {
+      valueDescriptionFormat: '{index}. {point.name}, vaccination: {point.x}m, positive cases: {point.y}m, population: {point.z} m.'
+    }
+  },
+
+  xAxis: {
+    gridLineWidth: 1,
+    title: {
+      text: 'Daily Vaccinations'
+    },
+    labels: {
+      format: '{value} m'
+    },
+    accessibility: {
+      rangeDescription: 'Range: 0 to 100 m .'
+    }
+  },
+
+  yAxis: {
+    startOnTick: false,
+    endOnTick: false,
+    title: {
+      text: 'Total Number of vaccinations'
+    },
+    labels: {
+      format: '{value} m'
+    },
+    accessibility: {
+      rangeDescription: 'Range: 0 to 500m.'
+    }
+  },
+
+  tooltip: {
+    useHTML: true,
+    headerFormat: '<table>',
+    pointFormat: '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>' +
+      '<tr><th>Daily of vaccinations</th><td>{point.x}</td></tr>' +
+      '<tr><th>Daily vaccinations per million</th><td>{point.y}</td></tr>' ,
+    footerFormat: '</table>',
+    followPointer: true
+  },
+
+  plotOptions: {
+    series: {
+      dataLabels: {
+        enabled: true,
+        format: '{point.country}'
+      }
+    }
+  },
+  series: [{
+	colorByPoint: true,
+      data: [{
+          x: 466833,
+          y: 12006,
+          z: 926702,
+          name: 'AFG',
+          country: 'Afghanistan'
+        },
+        {
+          x: 24599777,
+          y: 18343,
+          z: 1147802194,
+          name: 'AFR',
+          country: 'Africa'
+        },
+        {
+          x: 661161,
+          y: 229737,
+          z: 18178915,
+          name: 'ALB',
+          country: 'Albania'
+        },
+        {
+          x: 69070,
+          y: 1568,
+          z: 75030,
+          name: 'DzA',
+          country: 'Algeria'
+        },
+        {
+          x: 30078,
+          y: 389285,
+          z: 217053,
+          name: 'AND',
+          country: 'Andorra'
+        },
+        {
+          x: 656680,
+          y: 19989,
+          z: 2859831,
+          name: 'AGO',
+          country: 'Angola'
+        },
+        {
+          x: 12901,
+          y: 859944,
+          z: 49048,
+          name: 'AIA',
+          country: 'Anguilla'
+        },
+        {
+          x: 35542,
+          y: 362933,
+          z: 341320,
+          name: 'ATG',
+          country: 'Antigua and Barbuda'
+        },
+        {
+          x: 9982227,
+          y: 220870,
+          z: 445755742,
+          name: 'ARG',
+          country: 'Argentina'
+        },
+        {
+          x: 15830,
+          y: 5339,
+          z: 30541,
+          name: 'ARM',
+          country: 'Armenia'
+        },
+        {
+          x: 68378,
+          y: 640449,
+          z: 2442469,
+          name: 'ABW',
+          country: 'Aruba'
+        },
+        {
+          x: 740199442,
+          y: 159526,
+          z: 31736456196,
+          name: 'OWID_ASI',
+          country: 'Asia'
+        },
+        {
+          x: 3016762,
+          y: 118309,
+          z: 98234253,
+          name: 'AUS',
+          country: 'Australia'
+        },
+        {
+          x: 4026201,
+          y: 447034,
+          z: 191950886,
+          name: 'AUT',
+          country: 'Austria'
+        },
+        {
+          x: 1809099,
+          y: 178433,
+          z: 69811930,
+          name: 'AzE',
+          country: 'Azerbaijan'
+        },
+        {
+          x: 33875,
+          y: 86141,
+          z: 117209,
+          name: 'BHS',
+          country: 'Bahamas'
+        },
+        {
+          x: 1456279,
+          y: 855824,
+          z: 74655052,
+          name: 'BHR',
+          country: 'Bahrain'
+        },
+        {
+          x: 9530192,
+          y: 57872,
+          z: 330468962,
+          name: 'BGD',
+          country: 'Bangladesh'
+        },
+        {
+          x: 121406,
+          y: 422469,
+          z: 5368279,
+          name: 'BRB',
+          country: 'Barbados'
+        },
+        {
+          x: 425196,
+          y: 45005,
+          z: 1015106,
+          name: 'BLR',
+          country: 'Belarus'
+        },
+        {
+          x: 5224053,
+          y: 450753,
+          z: 236452265,
+          name: 'BEL',
+          country: 'Belgium'
+        },
+        {
+          x: 54728,
+          y: 137640,
+          z: 1039883,
+          name: 'BLz',
+          country: 'Belize'
+        },
+        {
+          x: 65849,
+          y: 1057427,
+          z: 638953,
+          name: 'BMU',
+          country: 'Bermuda'
+        },
+        {
+          x: 742954,
+          y: 962858,
+          z: 23201151,
+          name: 'BTN',
+          country: 'Bhutan'
+        },
+        {
+          x: 1090342,
+          y: 93404,
+          z: 34993237,
+          name: 'BOL',
+          country: 'Bolivia'
+        },
+        {
+          x: 133378,
+          y: 40656,
+          z: 258429,
+          name: 'BIH',
+          country: 'Bosnia and Herzegovina'
+        },
+        {
+          x: 66067,
+          y: 28094,
+          z: 460486,
+          name: 'BWA',
+          country: 'Botswana'
+        },
+        {
+          x: 53000829,
+          y: 249350,
+          z: 2152959396,
+          name: 'BRA',
+          country: 'Brazil'
+        },
+        {
+          x: 16061,
+          y: 36707,
+          z: 29283,
+          name: 'BRN',
+          country: 'Brunei'
+        },
+        {
+          x: 1131263,
+          y: 197046,
+          z: 51834878,
+          name: 'BGR',
+          country: 'Bulgaria'
+        },
+        {
+          x: 3294476,
+          y: 18343,
+          z: 109783429,
+          name: 'KHM',
+          country: 'Cambodia'
+        },
+        {
+          x: 47463,
+          y: 229737,
+          z: 103279,
+          name: 'CMR',
+          country: 'Cameroon'
+        },
+        {
+          x: 18417555,
+          y: 1568,
+          z: 755296893,
+          name: 'CAN',
+          country: 'Canada'
+        },
+        {
+          x: 22997,
+          y: 389285,
+          z: 46033,
+          name: 'CPV',
+          country: 'Cape Verde'
+        },
+        {
+          x: 75142,
+          y: 19989,
+          z: 1540484,
+          name: 'CyM',
+          country: 'Cayman Islands'
+        },
+        {
+          x: 16588565,
+          y: 859944,
+          z: 950155311,
+          name: 'CHL',
+          country: 'Chile'
+        },
+        {
+          x: 406870930,
+          y: 362933,
+          z: 13476861700,
+          name: 'CHN',
+          country: 'China'
+        },
+        {
+          x: 7343980,
+          y: 220870,
+          z: 197200411,
+          name: 'COL',
+          country: 'Colombia'
+        },
+        {
+          x: 35233,
+          y: 5339,
+          z: 102143,
+          name: 'COM',
+          country: 'Comoros'
+        },
+        {
+          x: 26469,
+          y: 640449,
+          z: 90716,
+          name: 'COG',
+          country: 'Congo'
+        },
+        {
+          x: 1184866,
+          y: 159526,
+          z: 8432899,
+          name: 'CRI',
+          country: 'Costa Rica'
+        },
+        {
+          x: 322733,
+          y: 118309,
+          z: 7263472,
+          name: 'CIV',
+          country: 'Cote dIvoire'
+        },
+        {
+          x: 1352782,
+          y: 447034,
+          z: 44629929,
+          name: 'HRV',
+          country: 'Croatia'
+        },
+        {
+          x: 669998,
+          y: 178433,
+          z: 810000,
+          name: 'CUB',
+          country: 'Cuba'
+        },
+        {
+          x: 106677,
+          y: 86141,
+          z: 3576727,
+          name: 'CUW',
+          country: 'Curacao'
+        },
+        {
+          x: 427923,
+          y: 855824,
+          z: 5729678,
+          name: 'CyP',
+          country: 'Cyprus'
+        },
+        {
+          x: 4187521,
+          y: 57872,
+          z: 197949729,
+          name: 'CzE',
+          country: 'Czechia'
+        },
+        {
+          x: 10533,
+          y: 422469,
+          z: 21301,
+          name: 'COD',
+          country: 'Democratic Republic of Congo'
+        },
+        {
+          x: 2683103,
+          y: 45005,
+          z: 132943276,
+          name: 'DNK',
+          country: 'Denmark'
+        },
+        {
+          x: 2794,
+          y: 450753,
+          z: 23288,
+          name: 'DJI',
+          country: 'Djibouti'
+        },
+        {
+          x: 34005,
+          y: 137640,
+          z: 355085,
+          name: 'DMA',
+          country: 'Dominica'
+        },
+        {
+          x: 3097561,
+          y: 1057427,
+          z: 61593272,
+          name: 'DOM',
+          country: 'Dominican Republic'
+        },
+        {
+          x: 1482750,
+          y: 962858,
+          z: 35274101,
+          name: 'ECU',
+          country: 'Ecuador'
+        },
+        {
+          x: 1272704,
+          y: 93404,
+          z: 3498037,
+          name: 'EGy',
+          country: 'Egypt'
+        },
+        {
+          x: 1382145,
+          y: 1795,
+          z: 23775903,
+          name: 'SLV',
+          country: 'El Salvador'
+        },
+        {
+          x: 46714201,
+          y: 487986,
+          z: 3095703012,
+          name: 'OWID_ENG',
+          country: 'England'
+        },
+        {
+          x: 156176,
+          y: 41345,
+          z: 418212,
+          name: 'GNQ',
+          country: 'Equatorial Guinea'
+        },
+        {
+          x: 584242,
+          y: 1143353,
+          z: 29733062,
+          name: 'EST',
+          country: 'Estonia'
+        },
+        {
+          x: 45299,
+          y: 867778,
+          z: 249602,
+          name: 'SWz',
+          country: 'Eswatini'
+        },
+        {
+          x: 1127370,
+          y: 282673,
+          z: 28969771,
+          name: 'ETH',
+          country: 'Ethiopia'
+        },
+        {
+          x: 293045106,
+          y: 144339,
+          z: 14770213803,
+          name: 'OWID_EUR',
+          country: 'Europe'
+        },
+        {
+          x: 199103604,
+          y: 40512,
+          z: 9203988408,
+          name: 'OWID_EUN ',
+          country:'European Union '
+        }, {
+            x: 22286,
+            y: 4786,
+            z: 482919,
+            name: 'FRO',
+            country: 'Faeroe Islands'
+          },
+          {
+            x: 4933,
+            y: 232598,
+            z: 14163,
+            name: 'FLK',
+            country: 'Falkland Islands'
+          },
+          {
+            x: 88427,
+            y: 12231,
+            z: 238983,
+            name: 'FJI',
+            country: 'Fiji'
+          },
+          {
+            x: 2397226,
+            y: 329528,
+            z: 90580970,
+            name: 'FIN',
+            country: 'Finland'
+          },
+          {
+            x: 28849157,
+            y: 59150,
+            z: 1323014607,
+            name: 'FRA',
+            country: 'France'
+          },
+          {
+            x: 82218,
+            y: 650071,
+            z: 562466,
+            name: 'PyF',
+            country: 'French Polynesia'
+          },
+          {
+            x: 11458,
+            y: 488564,
+            z: 58588,
+            name: 'GAB',
+            country: 'Gabon'
+          },
+          {
+            x: 26071,
+            y: 391031,
+            z: 131556,
+            name: 'GMB',
+            country: 'Gambia'
+          },
+          {
+            x: 98415,
+            y: 116,
+            z: 1628041,
+            name: 'GEO',
+            country: 'Georgia'
+          },
+          {
+            x: 39898031,
+            y: 463226,
+            z: 1755540035,
+            name: 'DEU',
+            country: 'Germany'
+          },
+          {
+            x: 937648,
+            y: 2827,
+            z: 8942441,
+            name: 'GHA',
+            country: 'Ghana'
+          },
+          {
+            x: 77346,
+            y: 472356,
+            z: 3802445,
+            name: 'GIB',
+            country: 'Gibraltar'
+          },
+          {
+            x: 4350155,
+            y: 285536,
+            z: 176409183,
+            name: 'GRC',
+            country: 'Greece'
+          }]
+      }]
+
+});
+Highcharts.chart('pie', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'COVID-19 Vaccination by Manfacturer'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            }
+        }
+    },
+    series: [{
+        name: 'Manfacturer',
+        colorByPoint: true,
+        data: [{
+            name: 'Pfizer/BioNTech',
+            y: 7730573844,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Moderna',
+            y: 4993374158
+        }, {
+            name: 'Oxford/AstraZeneca',
+            y: 456440762
+        }, {
+            name: 'Johnson&Johnson',
+            y: 223095695
+        }, {
+            name: 'Sinovac',
+            y: 541685912
+        }]
+    }]
+});
+
+// Create the chart
+Highcharts.chart('bar1', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'covid-19 Vaccinations'
+    },
+    subtitle: {
+        text: 'Click the columns to view versions. Source: <a href="https://ourworldindata.org/coronavirus-source-data" target="_blank">OWID DATA</a>'
+    },
+    accessibility: {
+        announceNewData: {
+            enabled: true
+        }
+    },
+    xAxis: {
+        type: 'category'
+    },
+    yAxis: {
+        title: {
+            text: 'Total Vaccincation percentage'
+        }
+		
+    },
+    legend: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '{point.y:.1f}'
+            }
+        }
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> of total<br/>'
+    },
+
+    series: [
+        {
+            name: "Continents",
+            colorByPoint: true,
+            data: [
+                {
+                    name: "Asia",
+                    y: 31736456196,
+                    drilldown: "Asia"
+                },
+                {
+                    name: "North America",
+                    y: 18367002868,
+                    drilldown: "North America"
+                    },
+                {
+                    name: "South America",
+                    y: 4393188450,
+                    drilldown: "South America"
+                },
+                {
+                    name: "Europe",
+                    y: 14770213803,
+                    drilldown: "Europe"
+                },
+                 {
+                    name: "Africa",
+                    y: 1147802194,
+                    drilldown: "Africa"
+                },
+                
+            ]
+        }
+    ],
+    drilldown: {
+        series: [
+            {
+                name: "Asia",
+                id: "Asia",
+                data: [
+                    [
+                        "Sum of daily_vaccinations_raw",
+                        792413535.0
+                    ],
+                    [
+                        "Sum of daily_vaccinations",
+                        740199442.0
+                    ],
+                    [
+                        "Sum of daily_vaccinations_per_million",
+                        159526.0	
+                    ],
+                    [
+                        "Sum of total_vaccinations",
+                        31736456196
+                    ],
+                   
+                ]
+            },
+            {
+                name: "North America",
+                id: "North America",
+                data:[
+                    [
+                        "Sum of daily_vaccinations_raw",
+                        330324092.0
+                    ],
+                    [
+                        "Sum of daily_vaccinations",
+                       322120013.0
+                    ],
+                    [
+                        "Sum of daily_vaccinations_per_million",
+                        544053.0	
+                    ],
+                    [
+                        "Sum of total_vaccinations",
+                        18367002868
+                    ],
+                   
+                ]
+            },
+            {
+                name: "South America",
+                id: "South America",
+                data: [
+                    [
+                        "Sum of daily_vaccinations_raw",
+                        98817167.0
+                    ],
+                    [
+                        "Sum of daily_vaccinations",
+                       95266060.0
+                    ],
+                    [
+                        "Sum of daily_vaccinations_per_million",
+                        221163.0	
+                    ],
+                    [
+                        "Sum of total_vaccinations",
+                        4393188450
+                    ],
+                   
+                ]
+            },
+            {
+                name: "Europe",
+                id: "Europe",
+                data: [
+                    [
+                        "Sum of daily_vaccinations_raw",
+                        303067572.0
+                    ],
+                    [
+                        "Sum of daily_vaccinations",
+                      293045106.0
+                    ],
+                    [
+                        "Sum of daily_vaccinations_per_million",
+                       391408.0	
+                    ],
+                    [
+                        "Sum of total_vaccinations",
+                        14770213803
+                    ],
+                   
+                ]
+            },
+            {
+                name: "Africa",
+                id: "Africa",
+                data: [
+                    [
+                        "Sum of daily_vaccinations_raw",
+                       25623816.0
+                    ],
+                    [
+                        "Sum of daily_vaccinations",
+                       24599777.0
+                    ],
+                    [
+                        "Sum of daily_vaccinations_per_million",
+                       18343.0	
+                    ],
+                    [
+                        "Sum of total_vaccinations",
+                        1147802194
+                    ],
+                   
+                ]
+            }
+        ]
+    }
+});
+
+Highcharts.chart('semicircle', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Total No.of Deaths<br>by<br>Continents',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
+    },
+    tooltip: {
+       pointFormat: '{series.name}: <b>{point.percentage:f}</b>',
+         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat:'<span style="color:{point.color}">{point.name}</span>: <b>{point.y:f}</b><br/>'
+    },
+    accessibility: {
+        announceNewData: {
+            enabled: true
+        }
+    },
+    xAxis: {
+        type: 'category'
+    },
+    yAxis: {
+        title: {
+            text: 'Total percent market share'
+        }
+
+    },
+    legend: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '{point.y:f}'
+            }
+        }
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:f}</b> of total<br/>'
+  
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%'],
+            size: '110%'
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Deaths',
+        innerSize: '50%',
+        data: [
+            {name:'africa' ,
+            y:22203548, 
+            drilldown:"Africa"},
+            {name:'Asia', 
+            y:101895447,
+            drilldown:"Asia"},
+            {name:'North America',
+             y:175144407,
+             drilldown:"North America"},
+            {name:'South America',
+            y:123552584,
+            drilldown:"South America"
+            },
+            {name:'Europe', y:186938454,drilldown:"Europe"},
+             {name:'Ocenania', y:283346,drilldown:"Ocenania"},
+            {
+                name: 'Other',
+                y: 7.61,
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        ]
+    }],
+   drilldown:{
+        series: [
+            {
+                name: "Asia",
+                id: "Asia",
+                data: [
+                    [
+                        "India",
+                        43145479
+                    ],
+                    [
+                        "China",
+                        3071321
+                    ],
+                    [
+                        "Afganistan",
+                        657571
+                    ],
+                    [
+                        "Bangladesh",
+                        2319241
+                    ],
+		 [
+                        "Bhutan",
+                        138
+                    ],
+                    [
+                        "Georgia",
+                        613517
+                    ],
+                    [
+                        "Iran",
+                        15426495
+                    ],
+                    [
+                        "Iraq",
+                        3666913
+                    ],
+                   [
+                        "Japan",
+                        15320202
+                    ],
+                ]
+
+            },
+            {
+                name: "North America",
+                id: "North America",
+                data: [
+                    [
+                        "Anguilla",
+                        0
+                    ],
+                    [
+                        "Bahamas",
+                        44904
+                    ],
+                    [
+                        "Barbados",
+                        6424
+                    ],
+                    [
+                        "Canada",
+                        55191399
+                    ],
+		 [
+                        "Costa Rica",
+                        595183
+                    ],
+                    [
+                        "Dominican Republic",
+                        830351
+                    ],
+                    [
+                        "Greenland",
+                        0
+                    ],
+                    [
+                        "Jamaica",
+                        101921
+                    ],
+                   [
+                        "Mexico",
+                        42115058
+                    ],
+                ]
+            },
+            {
+                name: "South America",
+                id: "South America",
+                 data: [
+                    [
+                        "Argentina",
+                        11806917
+                    ],
+                    [
+                        "Bolivia",
+                        2931699
+                    ],
+                    [
+                        "Chile",
+                        5602141
+                    ],
+                    [
+                        "Ecuador",
+                        4458671
+                    ],
+		 [
+                        "Falkland Islands",
+                        0
+                    ],
+                    [
+                        "Guyana",
+                        49635
+                    ],
+                    [
+                        "Paraguay",
+                        783995
+                    ],
+                    [
+                        "Peru",
+                        12919827
+                    ],
+                   [
+                        "Suriname",
+                        41149
+                    ],
+                ]
+
+            },
+            {
+                name: "Europe",
+                id: "Europe",
+                 data: [
+                    [
+                        "Albania",
+                        366164
+                    ],
+                    [
+                        "Austria",
+                        1635990
+                    ],
+                    [
+                        "Belarus",
+                        477536
+                    ],
+                    [
+                        "Belgium",
+                        6192903
+                    ],
+		 [
+                        "Bosnia and Herzegovina",
+                        1154349
+                    ],
+                    [
+                        "Croatia",
+                        1008329
+                    ],
+                    [
+                        "Cyprus",
+                        43559
+                    ],
+                    [
+                        "Denmark",
+                        505087
+                    ],
+                   [
+                        "Germany",
+                        13011201
+                    ],
+                ]
+            },
+            {
+                name: "Africa",
+                id: "Africa",
+                data: [
+                    [
+                        "Algeria",
+                        2351681
+                    ],
+                    [
+                        "Benin",
+                        18636
+                    ],
+                    [
+                        "Burkina Faso",
+                        35515
+                    ],
+                    [
+                        "Comoros",
+                        18936
+                    ],
+		 [
+                        "Egypt",
+                        2767959
+                    ],
+                    [
+                        "Guinea",
+                        28931
+                    ],
+                    [
+                        "Gabon",
+                        25993
+                    ],
+                    [
+                        "Kenya",
+                        470266
+                    ],
+                   [
+                        "Malawi",
+                        162678
+                    ],
+                ]
+            },
+            {
+                name: "Ocenania",
+                id: "Ocenania",
+                data: [
+                    [
+                        "Australia",
+                        264793
+                    ],
+                    [
+                        "Fiji",
+                        604
+                    ],
+                    [
+                        "Marshall Islands",
+                        0
+                    ],
+                    [
+                        "Micronesia (country)",
+                        0
+                    ],
+		 [
+                        "New Zealand",
+                        9706
+                    ],
+                    [
+                        "Papua New Guinea",
+                        8208
+                    ],
+                    [
+                        "New Caledonia",
+                        0
+                    ],
+                    [
+                        "Samoa",
+                        0
+                    ],
+                   [
+                        "Solomon Islands",
+                        0
+                    ],
+                ]
+
+            },
+        ]
+    }
+    
+});
+
+
+Highcharts.chart('bar', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'World\'s Vaccinations Continent wise'
+    },
+    subtitle: {
+        text: 'Source: <a href="https://ourworldindata.org/covid-vaccinations">OWID Data</a>'
+    },
+    xAxis: {
+        type: 'category',
+        labels: {
+            rotation: -45,
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Vaccinations (millions)'
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    tooltip: {
+        pointFormat: 'Total Vaccinations: <b>{point.y:.1f} millions</b>'
+    },
+    series: [{
+        name: 'Continents',
+        data: [
+            ['Africa',11.47],
+            ['Asia', 31.73],
+            ['Europe', 14.77],
+            ['Northa America', 18.33],
+            ['South America', 43.93],
+            
+        ],
+        dataLabels: {
+            enabled: true,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            format: '{point.y:.1f}', // one decimal
+            y: 1, // 10 pixels down from the top
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    }]
+});
+</script>
+   
+</body>
+</html> 
